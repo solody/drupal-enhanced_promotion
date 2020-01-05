@@ -1,0 +1,16 @@
+{
+    "name": "enhanced_promotion",
+    "type": "drupal-module",
+    "description": "Provides additional features for Commerce promotion.",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/enhanced_promotion",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/enhanced_promotion",
+        "source": "http://cgit.drupalcode.org/enhanced_promotion"
+    },
+    "require": {
+        "drupal/commerce": "^2.0"
+    }
+}

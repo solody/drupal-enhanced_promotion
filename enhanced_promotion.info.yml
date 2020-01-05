@@ -1,0 +1,11 @@
+name: 'Enhanced Promotion'
+type: module
+description: 'Provides additional features for Commerce promotion.'
+core: 8.x
+package: Commerce
+core_incompatible: false
+dependencies:
+  - commerce_promotion
+  - commerce_store
+  - image
+  - views

@@ -1,0 +1,91 @@
+<?php
+
+/**
+ * @file
+ * Contains enhanced_promotion.module.
+ */
+
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function enhanced_promotion_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the enhanced_promotion module.
+    case 'help.page.enhanced_promotion':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides additional features for Commerce promotion.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+
+
+/**
+ * Implements hook_entity_base_field_info().
+ */
+function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_type) {
+  $fields = [];
+
+  if ($entity_type->id() == 'commerce_promotion_coupon') {
+
+    $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
+      ->setLabel(t('Received User'))
+      ->setSetting('target_type', 'user')
+      ->setSetting('handler', 'default')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'entity_reference_label'
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'entity_reference_autocomplete'
+      ])
+      ->setDisplayConfigurable('view', true)
+      ->setDisplayConfigurable('form', true);
+  }
+
+  if ($entity_type->id() == 'commerce_promotion') {
+
+    $fields['image'] = BaseFieldDefinition::create('image')
+      ->setLabel(t('Advert Image'))
+      ->setCardinality(1)
+      ->setSettings([
+        'file_directory' => 'commerce_promotion/promotion/image/[date:custom:Y]-[date:custom:m]',
+        'file_extensions' => 'png gif jpg jpeg',
+        'max_filesize' => '5 MB',
+        'max_resolution' => '',
+        'min_resolution' => '',
+        'alt_field' => false,
+        'alt_field_required' => true,
+        'title_field' => false,
+        'title_field_required' => false,
+        'handler' => 'default:file',
+        'handler_settings' => []
+      ])
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'image'
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'image_image'
+      ]);
+  }
+
+  return $fields;
+}
+
+
+function enhanced_promotion_entity_type_alter(array &$entity_types) {
+
+  /** @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
+
+  // Set the controller class for nodes to an alternate implementation of the
+  // Drupal\Core\Entity\EntityStorageInterface interface.
+  $entity_types['commerce_promotion']->setLinkTemplate('canonical', '/promotion/{commerce_promotion}');
+}
