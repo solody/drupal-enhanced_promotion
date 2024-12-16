@@ -11,6 +11,6 @@
         "source": "http://cgit.drupalcode.org/enhanced_promotion"
     },
     "require": {
-        "drupal/commerce": "^2.0"
+        "drupal/commerce": "^2.0 || ^3.0"
     }
 }

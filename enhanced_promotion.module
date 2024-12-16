@@ -12,16 +12,15 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function enhanced_promotion_help($route_name, RouteMatchInterface $route_match) {
+function enhanced_promotion_help($route_name, RouteMatchInterface $route_match): string {
   switch ($route_name) {
     // Main module help for the enhanced_promotion module.
     case 'help.page.enhanced_promotion':
-      $output = '';
-      $output .= '<h3>' . t('About') . '</h3>';
+      $output = '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Provides additional features for Commerce promotion.') . '</p>';
       return $output;
-
     default:
+      return '';
   }
 }
 
@@ -30,7 +29,7 @@ function enhanced_promotion_help($route_name, RouteMatchInterface $route_match) 
 /**
  * Implements hook_entity_base_field_info().
  */
-function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_type) {
+function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_type): array {
   $fields = [];
 
   if ($entity_type->id() == 'commerce_promotion_coupon') {
@@ -57,16 +56,8 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
       ->setCardinality(1)
       ->setSettings([
         'file_directory' => 'commerce_promotion/promotion/image/[date:custom:Y]-[date:custom:m]',
-        'file_extensions' => 'png gif jpg jpeg',
-        'max_filesize' => '5 MB',
-        'max_resolution' => '',
-        'min_resolution' => '',
         'alt_field' => false,
-        'alt_field_required' => true,
         'title_field' => false,
-        'title_field_required' => false,
-        'handler' => 'default:file',
-        'handler_settings' => []
       ])
       ->setDisplayOptions('view', [
         'label' => 'above',
@@ -81,7 +72,10 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
 }
 
 
-function enhanced_promotion_entity_type_alter(array &$entity_types) {
+/**
+ * Implements hook_entity_type_alter().
+ */
+function enhanced_promotion_entity_type_alter(array &$entity_types): void {
 
   /** @var $entity_types \Drupal\Core\Entity\EntityTypeInterface[] */
 
