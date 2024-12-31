@@ -1,5 +1,5 @@
 {
-    "name": "enhanced_promotion",
+    "name": "drupal/enhanced_promotion",
     "type": "drupal-module",
     "description": "Provides additional features for Commerce promotion.",
     "keywords": [
