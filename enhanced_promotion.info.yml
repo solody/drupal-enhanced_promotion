@@ -1,10 +1,10 @@
 name: 'Enhanced Promotion'
 type: module
 description: 'Provides additional features for Commerce promotion.'
-core_version_requirement: '^9.4 || ^10 || ^11'
+core_version_requirement: '^10.3 || ^11'
 package: Commerce
 dependencies:
-  - commerce_promotion
-  - commerce_store
-  - image
-  - views
+  - 'commerce_promotion:commerce_promotion'
+  - 'commerce_store:commerce_store'
+  - 'drupal:image'
+  - 'drupal:views'

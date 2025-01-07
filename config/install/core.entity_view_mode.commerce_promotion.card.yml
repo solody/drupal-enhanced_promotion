@@ -1,12 +1,13 @@
 langcode: en
 status: false
 dependencies:
+  module:
+    - commerce_promotion
   enforced:
     module:
       - enhanced_promotion
-  module:
-    - commerce_promotion
 id: commerce_promotion.card
 label: 'Commerce Promotion Card'
+description: null
 targetEntityType: commerce_promotion
 cache: true
