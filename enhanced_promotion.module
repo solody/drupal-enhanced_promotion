@@ -24,15 +24,13 @@ function enhanced_promotion_help($route_name, RouteMatchInterface $route_match):
   }
 }
 
-
-
 /**
  * Implements hook_entity_base_field_info().
  */
 function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_type): array {
   $fields = [];
 
-  if ($entity_type->id() == 'commerce_promotion_coupon') {
+  if ($entity_type->id() === 'commerce_promotion_coupon') {
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Received User'))
@@ -49,7 +47,7 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
       ->setDisplayConfigurable('form', true);
   }
 
-  if ($entity_type->id() == 'commerce_promotion') {
+  if ($entity_type->id() === 'commerce_promotion') {
 
     $fields['image'] = BaseFieldDefinition::create('image')
       ->setLabel(t('Advert Image'))
@@ -65,6 +63,22 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
       ])
       ->setDisplayOptions('form', [
         'type' => 'image_image'
+      ]);
+  }
+
+  if ($entity_type->id() === 'commerce_promotion') {
+
+    // Add a field that shows a link to the user's current company.
+    $fields['coupon_stock'] = BaseFieldDefinition::create('coupon_stock')
+      ->setName('coupon_stock')
+      ->setLabel(t('Stock of coupons can be claimed'))
+      ->setComputed(TRUE)
+      ->setClass('\Drupal\enhanced_promotion\CouponStockItemList')
+      ->setCardinality(1) // You only need this if your computed field is multi-value.
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'weight' => -5,
       ]);
   }
 
