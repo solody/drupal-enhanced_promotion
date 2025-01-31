@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - enhanced_promotion
+    - serialization
+    - simple_oauth
+id: enhanced_promotion_check_coupons_availability
+plugin_id: enhanced_promotion_check_coupons_availability
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - oauth2
