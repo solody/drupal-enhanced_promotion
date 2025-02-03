@@ -11,7 +11,7 @@ use Drupal\user\RoleInterface;
  * Implements hook_install().
  * @noinspection PhpUnused
  */
-function commerce_checkout_api_install() {
+function enhanced_promotion_install() {
   // Append rest plugin permissions to authenticated role.
   $permissions = [
     'restful post enhanced_promotion_check_coupons_availability',
