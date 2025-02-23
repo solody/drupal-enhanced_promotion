@@ -91,7 +91,7 @@ final class ClaimCouponResource extends ResourceBase {
       throw new BadRequestHttpException('The promotion can not has any coupons.');
     }
     $coupons = $promotion->getCoupons();
-    if (count($coupons) >= $promotion->getUsageLimit()) {
+    if ($promotion->getUsageLimit() > 0 && count($coupons) >= $promotion->getUsageLimit()) {
       throw new BadRequestHttpException('The promotion touch usage limitation.');
     }
     $coupons_of_current_user = [];
@@ -101,7 +101,7 @@ final class ClaimCouponResource extends ResourceBase {
         $coupons_of_current_user[] = $coupon;
       }
     }
-    if (count($coupons_of_current_user) >= $promotion->getCustomerUsageLimit()) {
+    if ($promotion->getCustomerUsageLimit() > 0 && count($coupons_of_current_user) >= $promotion->getCustomerUsageLimit()) {
       throw new BadRequestHttpException('The promotion touch customer usage limitation.');
     }
 

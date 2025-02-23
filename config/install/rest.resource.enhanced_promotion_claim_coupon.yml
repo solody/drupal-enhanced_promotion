@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - enhanced_promotion
+    - serialization
+    - simple_oauth
+id: enhanced_promotion_claim_coupon
+plugin_id: enhanced_promotion_claim_coupon
+granularity: resource
+configuration:
+  methods:
+    - POST
+  formats:
+    - json
+  authentication:
+    - oauth2
