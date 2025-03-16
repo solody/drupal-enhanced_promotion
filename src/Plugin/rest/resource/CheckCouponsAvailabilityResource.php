@@ -56,7 +56,7 @@ final class CheckCouponsAvailabilityResource extends ResourceBase {
       $rs[(int) $coupon->id()] = $coupon->available($order);
     }
     // Return the newly created record in the response body.
-    return new ModifiedResourceResponse($rs, 200);
+    return new ModifiedResourceResponse(empty($rs) ? '{}' : $rs, 200);
   }
 
 }
