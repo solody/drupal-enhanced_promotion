@@ -8,3 +8,4 @@ dependencies:
   - 'commerce_store:commerce_store'
   - 'drupal:image'
   - 'drupal:views'
+  - 'simple_oauth:simple_oauth'

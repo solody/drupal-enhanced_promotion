@@ -16,6 +16,7 @@ function enhanced_promotion_install() {
   $permissions = [
     'restful post enhanced_promotion_check_coupons_availability',
     'restful post enhanced_promotion_claim_coupon',
+    'restful post enhanced_promotion_get_user_coupons',
   ];
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, $permissions);
 }

@@ -8,6 +8,8 @@
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\enhanced_promotion\CouponStockItemList;
+use Drupal\enhanced_promotion\CouponUsageItemList;
 
 /**
  * Implements hook_help().
@@ -33,7 +35,7 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
   if ($entity_type->id() === 'commerce_promotion_coupon') {
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Received User'))
+      ->setLabel(t('Claimed user'))
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setDisplayOptions('view', [
@@ -45,12 +47,25 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
       ])
       ->setDisplayConfigurable('view', true)
       ->setDisplayConfigurable('form', true);
+
+    $fields['usage'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Usage'))
+      ->setDescription(t('Usage of this coupon.'))
+      ->setComputed(TRUE)
+      ->setClass(CouponUsageItemList::class)
+      ->setCardinality(1) // You only need this if your computed field is multi-value.
+      ->setDisplayConfigurable('view', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'weight' => -5,
+      ]);
   }
 
   if ($entity_type->id() === 'commerce_promotion') {
 
     $fields['image'] = BaseFieldDefinition::create('image')
-      ->setLabel(t('Advert Image'))
+      ->setLabel(t('Advert image'))
+      ->setDescription(t('Image to display for this promotion.'))
       ->setCardinality(1)
       ->setSettings([
         'file_directory' => 'commerce_promotion/promotion/image/[date:custom:Y]-[date:custom:m]',
@@ -67,13 +82,11 @@ function enhanced_promotion_entity_base_field_info(EntityTypeInterface $entity_t
   }
 
   if ($entity_type->id() === 'commerce_promotion') {
-
-    // Add a field that shows a link to the user's current company.
     $fields['coupon_stock'] = BaseFieldDefinition::create('coupon_stock')
-      ->setName('coupon_stock')
-      ->setLabel(t('Stock of coupons can be claimed'))
+      ->setLabel(t('Coupon stock'))
+      ->setDescription(t('Stock of coupons can be claimed.'))
       ->setComputed(TRUE)
-      ->setClass('\Drupal\enhanced_promotion\CouponStockItemList')
+      ->setClass(CouponStockItemList::class)
       ->setCardinality(1) // You only need this if your computed field is multi-value.
       ->setDisplayConfigurable('view', TRUE)
       ->setDisplayOptions('view', [
