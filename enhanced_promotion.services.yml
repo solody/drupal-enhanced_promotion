@@ -1,0 +1,7 @@
+services:
+
+  enhanced_promotion.normalizer.entity_references:
+    class: Drupal\enhanced_promotion\Normalizer\EntityReferenceNormalizer
+    arguments: ['@entity.repository', '@current_route_match']
+    tags:
+      - { name: normalizer, priority: 9 }
